@@ -34,8 +34,8 @@ void ThreadOnline::imageToHex(QImage &image)
 void ThreadOnline::runClientOnline()
 {
     //qDebug()<<"sssssssssss";
-    userAccount="42011119761103503x";
-    userPassword="8251032ssq.SSQ";
+    userAccount="username";
+    userPassword="password";
     timer = new QTimer(this);
     timer->setTimerType(Qt::PreciseTimer);
     getCode();

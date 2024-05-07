@@ -10,8 +10,8 @@ ThreadRunClient::ThreadRunClient(QObject *parent)
 void ThreadRunClient::runClient()
 {
     //qDebug()<<"sssssssssss";
-    userAccount="4228110010016";
-    userPassword="8251032ssq";
+    userAccount="username";
+    userPassword="password";
     flag=0;
     timer = new QTimer(this);
     timer->setTimerType(Qt::PreciseTimer);
