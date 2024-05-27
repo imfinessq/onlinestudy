@@ -14,18 +14,21 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("onlinestudy");
+    //QVBoxLayout *vboxlayout = new QVBoxLayout();
 
-    QTabWidget *tabWidgetFx = new QTabWidget(this);
-    tabWidgetFx->setFixedSize(width(), height());
+    //QTabWidget *
+    tabWidget = new QTabWidget(this);
+    //tabWidget->setFixedSize(width(), height());
+    tabWidget->resize(width(), height());
     //tabWidget->setTabShape(QTabWidget::Triangular);
-    tabWidgetFx->setTabPosition(QTabWidget::North);
-    tabWidgetFx->setStyleSheet("QTabBar::tab { height: 30px; width: 100px; }");
+    tabWidget->setTabPosition(QTabWidget::North);
+    tabWidget->setStyleSheet("QTabBar::tab { height: 30px; width: 100px; }");
 
     QWidget *widgetfx = new QWidget;//(this);
     QWidget *widgetzx = new QWidget;
     this->setCentralWidget(widgetfx);
-    tabWidgetFx->addTab(widgetfx, "法宣学习");
-    tabWidgetFx->addTab(widgetzx, "干部在线");
+    tabWidget->addTab(widgetfx, "法宣学习");
+    tabWidget->addTab(widgetzx, "干部在线");
 /////////////////////////////////////////////////////////////////
     //QTextEdit
     textEditFx=new QTextEdit(widgetfx);
@@ -39,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     labelFx->setAlignment(Qt::AlignCenter);//居中显示
     pushButtonFx = new QPushButton(widgetfx);
     pushButtonFx->setText("开 始");
+    pushButtonFx->setFixedSize(80,23);
     //QTableWidget
     tableWidgetFx = new QTableWidget(widgetfx);
     tableWidgetFx->setShowGrid(true); //设置显示格子线
@@ -47,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     tableWidgetFx->setRowCount(1); //设置行数
     tableWidgetFx->setColumnCount(3); //设置列数
     //tableWidget->setWindowTitle("TABLE演示");
+    //tableWidgetFx->horizontalHeader()->setStretchLastSection(true);
     tableWidgetFx->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);    //x先自适应宽度
     //tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
     tableWidgetFx->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);     //然后设置要根据内容使用宽度的列
@@ -58,9 +63,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     QGridLayout *gridlayoutfx = new QGridLayout(widgetfx);
     gridlayoutfx->addWidget(labelFx,0,0,1,1);//将QLabel添加到网格布局的0行0列，占用1行1列
-    gridlayoutfx->addWidget(pushButtonFx,10,1,1,1);
-    gridlayoutfx->addWidget(tableWidgetFx,1,0,15,1);
-    gridlayoutfx->addWidget(textEditFx,16,0,5,1);
+    gridlayoutfx->addWidget(pushButtonFx,0,2,1,1);
+    gridlayoutfx->addWidget(tableWidgetFx,1,0,15,3);
+    gridlayoutfx->addWidget(textEditFx,16,0,5,3);
     widgetfx->setLayout(gridlayoutfx);
 //////////////////////////////////////////////////////////////////////////////////
     //QTextEdit
@@ -75,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
     labelZx->setAlignment(Qt::AlignCenter);//居中显示
     pushButtonZx = new QPushButton(widgetzx);
     pushButtonZx->setText("开 始");
+    pushButtonZx->setFixedSize(80,23);
     //QTableWidget
     tableWidgetZx = new QTableWidget(widgetzx);
     tableWidgetZx->setShowGrid(true); //设置显示格子线
@@ -98,11 +104,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     QGridLayout *gridlayoutzx = new QGridLayout(widgetzx);
     gridlayoutzx->addWidget(labelZx,0,0,1,1);//将QLabel添加到网格布局的0行0列，占用1行1列
-    gridlayoutzx->addWidget(pushButtonZx,10,1,1,1);
-    gridlayoutzx->addWidget(tableWidgetZx,1,0,15,1);
-    gridlayoutzx->addWidget(textEditZx,16,0,5,1);
+    gridlayoutzx->addWidget(pushButtonZx,0,2,1,1);
+    gridlayoutzx->addWidget(tableWidgetZx,1,0,15,3);
+    gridlayoutzx->addWidget(textEditZx,16,0,5,3);
     widgetzx->setLayout(gridlayoutzx);
 //////////////////////////////////////////////////////////////////////////////////////
+    //vboxlayout->addWidget(tabWidget);
+
     //TestAes();
     threadclientfx=new ThreadRunClient();
     qthreadfx=new QThread();
@@ -129,6 +137,12 @@ MainWindow::MainWindow(QWidget *parent)
     //connect(this,SIGNAL(destroyed()),this,SLOT(quitThreadSlot()));
     qthreadfx->start();
     qthreadzx->start();
+}
+//重载resizeevent,改变窗口大小时处理事件
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+    tabWidget->resize(width(), height());//随窗口改变大小
 }
 void MainWindow::onButtonFxClicked()
 {
