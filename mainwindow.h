@@ -40,6 +40,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QTabWidget *tabWidget;
     ThreadRunClient* threadclientfx; //实例化ThreadRunClient类
     QThread* qthreadfx;   //实例化QThread类
     ThreadOnline* threadclientzx;
@@ -52,5 +53,8 @@ private:
     QLabel *labelZx;
     QTextEdit *textEditZx;
     QPushButton *pushButtonZx;
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 };
 #endif // MAINWINDOW_H
